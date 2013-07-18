@@ -15,4 +15,5 @@ $tcd = $tcsoap->dogrula();  //dönen değer true yada undefined
 $tcdogrumu=$tcsoap->check_tc();   //dönen değer true yada false validate tc no
 
 if($tcdogrumu){echo "ok";}else{echo "no";}
+
 if($tcd=="true"){ echo "Doğrulama başarılı";}else{ echo "Doğrulama başarısız";}
