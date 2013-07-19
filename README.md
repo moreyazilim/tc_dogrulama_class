@@ -1,4 +1,4 @@
-tc kimlik doğrulama
+TC Kimlik No Doğrulama
 ==================
 
 tc kimlik doğrulama(N.V.İ) -ad,soyad,doğum tarihi,tc no ile kullanıcının bilgilerini karşılaştırabilir doğrulayabilirsiniz.
@@ -23,5 +23,3 @@ $tcnvi_validate = $tcsoap->dogrula();               //dönen değer true yada fa
 }
 
 
-GEREKSİNİMLER
-=====================
