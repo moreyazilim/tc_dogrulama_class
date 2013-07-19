@@ -7,16 +7,18 @@
 * @link http://www.moreyazilim.com
 
 */
+
 class tckimlik_soap {
 
   private $bilgiler;
 
-  public function __construct($bilgiler)
+	public function __construct($bilgiler)
 	{
 		$this->tc = trim($bilgiler["tcno"]);
 		$this->ad = trim($bilgiler["isim"]);
 		$this->soyad = trim($bilgiler["soyisim"]);
 		$this->dyili = trim($bilgiler["dogumyili"]);
+		
 
 	}
 	
@@ -41,6 +43,7 @@ class tckimlik_soap {
 			'88888888880',
 			'99999999990'
 		);
+		
 
     	if ( $this->tc[0]==0 || !ctype_digit($this->tc) || strlen($this->tc)!=11) {
     		return false;
@@ -65,7 +68,10 @@ class tckimlik_soap {
 	}
 	public function dogrula()
 	{
-		return $this->sorgula_v1_1();
+		if($this->sorgula_v1_1()){return $this->sorgula_v1_1();}else{return $this->sorgula_soapclient();}
+		
+		 //return $this->sorgula_soapclient();
+		//return $this->sorgula_v1_1();
 	}
 
 	private function sorgula_v1_1()
@@ -95,13 +101,49 @@ class tckimlik_soap {
 'SOAPAction: "http://tckimlik.nvi.gov.tr/WS/TCKimlikNoDogrula"',
 'Content-Length: '.strlen($gonder)
 ));
-$gelen = curl_exec($ch);
-curl_close($ch);
-		return strip_tags($gelen);
+       $gelen = curl_exec($ch);
+       curl_close($ch);
+      if(strip_tags($gelen)=="true"){
+	   return true;
+	}else{
+	   return false;
+		}
+	
+		
         
        
 	}
 
+    private function sorgula_soapclient(){
+		ini_set("soap.wsdl_cache", "0");
+        ini_set("soap.wsdl_cache_enabled", "0");
+		
+		$wsdl="https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx?wsdl";
+		$options = array(
+                  'cache_wsdl' => 0,
+				  'soap_version'   => SOAP_1_2,
+        );
+					
+       // header ('Content-type: text/html; charset=utf-8');
+		$soap_client_array = array(
+		'TCKimlikNo' =>$this->tc ,
+		'Ad' =>$this->tr_toUpper($this->ad) ,
+		'Soyad' =>$this->tr_toUpper($this->soyad),
+		'DogumYili' =>$this->dyili ,
+		);
+		
+		
+			try {
+                    $client = new SoapClient($wsdl,$options);
+                    $response = $client->TCKimlikNoDogrula($soap_client_array);
 
+                    return $response->TCKimlikNoDogrulaResult ? true : false;
+                }
+           catch(Exception $ex) {
+           //return  $ex->faultstring;
+		   return false;
+                }
+		
+		}
 
 }
