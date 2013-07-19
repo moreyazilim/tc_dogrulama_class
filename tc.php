@@ -1,7 +1,9 @@
 <?php
 
+
 if(isset($_POST["tc_no"]) && !empty($_POST["tc_no"])){
-  $tc=$_POST["tc_no"];
+	$_POST['tc_no'] *= 1;
+	$tc=$_POST["tc_no"];
 	$ad=$_POST["ad"];
 	$soyad=$_POST["soyad"];
 	$dogum_yili=$_POST["dogum_yili"];
@@ -18,17 +20,18 @@ if(isset($_POST["tc_no"]) && !empty($_POST["tc_no"])){
 $tcsoap = new tckimlik_soap($bilgiler);
 $tcd = $tcsoap->dogrula();
 $tcdogrumu=$tcsoap->check_tc();
+
 if($tcdogrumu){
-	echo "dogru";
-	
-	}else{
-		echo "yanlış";
-		}
-if($tcd=="true"){
+	if($tcd=="true"){
 echo "Doğrulama başarılı";
 }else{
 echo "Doğrulama başarısız";
 }
+	
+	}else{
+		echo "yanlış tc no girdiniz";
+		}
+
 
 
 
@@ -46,7 +49,7 @@ echo "Doğrulama başarısız";
 </head>
 <body>
  
-<form action="http://url.moreyazilim.com/tc_dogrula/tc.php" method="post">
+<form action="" method="post">
 Ad:<div><input type="text" name="ad" /></div>
 Soyad:<div><input type="text" name="soyad" /></div>
 Doğum Yılı:<div><input type="text" name="dogum_yili" /></div>
