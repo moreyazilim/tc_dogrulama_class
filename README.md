@@ -1,7 +1,7 @@
 tc kimlik doğrulama
 ==================
 
-tc kimlik doğrulama -ad,soyad,doğum tarihi,tc no ile kullanıcının bilgilerini karşılaştırabilir doğrulayabilirsiniz.
+tc kimlik doğrulama(N.V.İ) -ad,soyad,doğum tarihi,tc no ile kullanıcının bilgilerini karşılaştırabilir doğrulayabilirsiniz.
 
 tckimlik_soap.php class 
 =====================
@@ -11,9 +11,17 @@ require_once('tckimlik_soap.php');
   
 
 $tcsoap = new tckimlik_soap($bilgiler);
-$tcd = $tcsoap->dogrula();  //dönen değer true yada undefined
-$tcdogrumu=$tcsoap->check_tc();   //dönen değer true yada false validate tc no
+       
+$tc_validate  =  $tcsoap->check_tc();              //dönen değer true yada false 
 
-if($tcdogrumu){echo "ok";}else{echo "no";}
+if($tc_validate){
 
-if($tcd=="true"){ echo "Doğrulama başarılı";}else{ echo "Doğrulama başarısız";}
+$tcnvi_validate = $tcsoap->dogrula();               //dönen değer true yada false
+
+
+      if($tcnvi_validate){echo "Doğrulama başarılı";}else{ echo "Doğrulama başarısız";}
+}
+
+
+GEREKSİNİMLER
+=====================
