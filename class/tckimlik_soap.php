@@ -3,7 +3,7 @@
 * tc sorgula
 *
 * @author fatih çırak
-* @copyright Copyright (c) 2013, Faih çırak
+* @copyright Copyright (c) 2013, Fatih çırak
 * @link http://www.moreyazilim.com
 
 */
